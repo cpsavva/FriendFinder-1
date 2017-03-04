@@ -1,30 +1,29 @@
-const methodOverride = require('method-override');
-const path = require('path');
-const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const express = require('express');
-const mysql = require('mysql');
+const path = require('path');
+
 
 const app = express();
 const PORT = 3000;
 
-const conn = mysql.createConnection({
-  host: 'localhost',
-  port: '3306',
-  user: 'developer',
-  database: 'dayplans_db'
-});
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(methodOverride('_method'));
-
+app.use(express.static(path.join(__dirname, 'app/public')));
 
 //============================================
 // routes
 // ===========================================
-app.get('/', (req, res) => {
-  res.end();
-})
+const htmlRoutes = require('./app/routing/htmlRoutes')(app);
+const apiRoutes = require('./app/routing/apiRoutes')(app);
 
-// END ROUTES ================================
+// ---- ERROR ROUTES -------------------------
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, "app/public/404.html"));
+});
+
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+    res.status(500).sendFile(path.join(__dirname, "app/public/500.html"));
+});
+//--------------------------------------------
+
 app.listen(PORT, () => console.log(`Server Started: Listening on Port ${PORT}`));
