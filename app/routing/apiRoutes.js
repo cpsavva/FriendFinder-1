@@ -10,8 +10,7 @@ module.exports = function(app) {
         const currentUserScores = req.body["scores[]"];
 
         computeScores(currentUserScores, friendData, (suggestedProfile) => {
-            console.log(suggestedProfile)
-            res.send(suggestedProfile);
+            res.json(suggestedProfile);
         });
     });
 
@@ -31,6 +30,5 @@ function computeScores(userScores, friends, cb) {
             bestMatch = friends[idx];
         }
     });
-    console.log(`bestMatch ${bestMatch}`)
     cb(bestMatch);
 }

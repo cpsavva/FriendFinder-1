@@ -39,7 +39,6 @@
             var baseURL = window.location.origin;
             $.post(`${baseURL}/api/friends`, userData, function(data) {
                 var user = data;
-                console.log(`User From Response: ${user.animal}`);
 
                 $("#matchName").text(user.name);
                 $('#matchImg').attr("src", user.photo);
