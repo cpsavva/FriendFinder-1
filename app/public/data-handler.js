@@ -20,9 +20,9 @@
         if (isValidated() == true) {
             // user's data
             var userData = {
-                name: $("#name").val(),
-                photo: $("#photo").val(),
-                scores: [
+                "name": $("#name").val(),
+                "photo": $("#photo").val(),
+                "scores": [
                     $("#q1").val(),
                     $("#q2").val(),
                     $("#q3").val(),
